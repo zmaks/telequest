@@ -1,0 +1,20 @@
+services:
+  mongodb:
+    image: mongo
+    hostname: "mongodb"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=maxim
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+  itqst:
+    image: zumaxim/questols:latest
+    hostname: "itqst"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://maxim:password@mongodb:27017/itqst?authSource=admin
+      - TELEGRAM_TOKEN=token
+      - QUEST_DEFAULT_NAME=it
+      - BOT_PLAYER_REGISTRATION_MODE=false
+      - BOT_ALLOW_USER_MESSAGE=true
+    depends_on:
+      - mongodb

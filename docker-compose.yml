@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    hostname: "mongodb"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=maxim
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+  questols:
+    build: .
+    image: zumaxim/questols:latest
+    hostname: "questols"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://maxim:password@mongodb:27017/qst?authSource=admin
+      - TELEGRAM_TOKEN=
+      - QUEST_DEFAULT_NAME=demo
+      - BOT_ADMINS=zumaxim
+      - BOT_ALLOW_USER_MESSAGE=true
+    depends_on:
+      - mongodb
